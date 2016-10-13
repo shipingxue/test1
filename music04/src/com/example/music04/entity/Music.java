@@ -1,5 +1,7 @@
 package com.example.music04.entity;
 
+import java.util.List;
+
 /**
  * √Ë ˆ“ª ◊“Ù¿÷
  * 
@@ -20,6 +22,9 @@ public class Music {
 	private String album_id;
 	private String album_title;
 	private String artist_name;
+
+	private List<SongUrl> urls;
+	private SongInfo songInfo;
 
 	public Music() {
 		super();
@@ -43,6 +48,22 @@ public class Music {
 		this.album_id = album_id;
 		this.album_title = album_title;
 		this.artist_name = artist_name;
+	}
+
+	public List<SongUrl> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(List<SongUrl> urls) {
+		this.urls = urls;
+	}
+
+	public SongInfo getSongInfo() {
+		return songInfo;
+	}
+
+	public void setSongInfo(SongInfo songInfo) {
+		this.songInfo = songInfo;
 	}
 
 	public String getArtist_id() {

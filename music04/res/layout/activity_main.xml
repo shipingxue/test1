@@ -47,8 +47,44 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_music"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_bottom"
         android:layout_below="@+id/rg_tab" />
 
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ff0000"
+        android:padding="10dp" >
+
+        <com.example.music04.view.RoundImageView
+            android:id="@+id/iv_album"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_musicTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/iv_album"
+            android:text="musicTitle"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_musicAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_musicTitle"
+            android:layout_toRightOf="@+id/iv_album"
+            android:text="Author"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
 </RelativeLayout>
