@@ -56,14 +56,15 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="#ff0000"
-        android:padding="10dp" >
+        android:background="#ff0000">
 
         <com.example.music04.view.RoundImageView
             android:id="@+id/iv_album"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/ic_launcher" />
 
         <TextView
@@ -84,7 +85,7 @@
             android:layout_toRightOf="@+id/iv_album"
             android:text="Author"
             android:textColor="#ffffff"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -6,6 +6,8 @@
     <ListView
         android:id="@+id/lv_new"
         android:layout_width="match_parent"
+        android:dividerHeight="5dp"
+        android:divider="#ffffff"
         android:layout_height="wrap_content" >
     </ListView>
 

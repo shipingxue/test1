@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,6 +35,8 @@ import com.example.music04.fragment.HotMusicListFragment;
 import com.example.music04.fragment.NewMusicListFragment;
 import com.example.music04.service.PlayMusicService;
 import com.example.music04.service.PlayMusicService.MusicBinder;
+import com.example.music04.util.BitmapCallback;
+import com.example.music04.util.BitmapUtils;
 import com.example.music04.util.GlobalConsts;
 
 public class MainActivity extends FragmentActivity implements
@@ -44,6 +49,7 @@ public class MainActivity extends FragmentActivity implements
 	PagerAdapter pagerAdapter;
 	private List<Fragment> fragments;
 	private InnerServiceConnection conn;
+	private MusicBroadcastReceiver receiver;
 
 	private ImageView ivAlbum;
 	private TextView tvTitle;
@@ -66,9 +72,9 @@ public class MainActivity extends FragmentActivity implements
 		setAdapter();
 		setListeners();
 
-		MusicBroadcastReceiver receiver = new MusicBroadcastReceiver();
+		receiver = new MusicBroadcastReceiver();
 		IntentFilter filter = new IntentFilter();
-		;
+		filter.addAction(GlobalConsts.ACTION_MUSIC_STARTED);
 		registerReceiver(receiver, filter);
 
 	}
@@ -105,6 +111,26 @@ public class MainActivity extends FragmentActivity implements
 				Music music = app.getCurrentMusic();
 				tvTitle.setText(music.getTitle());
 				tvAuthor.setText(music.getAuthor());
+				
+				//加载图片
+				String path = music.getPic_small();
+				BitmapUtils.loadBitmap(path, new BitmapCallback() {
+					
+					@Override
+					public void onBitmapLoaded(Bitmap bitmap) {
+						if (bitmap != null) {
+							ivAlbum.setImageBitmap(bitmap);
+							RotateAnimation anim = new RotateAnimation(0, 360, ivAlbum.getWidth()/2, ivAlbum.getHeight()/2);
+							anim.setDuration(10000);
+							anim.setInterpolator(new LinearInterpolator()); //匀速运动
+							anim.setRepeatCount(RotateAnimation.INFINITE);
+							ivAlbum.startAnimation(anim);
+						} else {
+							ivAlbum.setImageResource(R.drawable.ic_launcher);
+						}
+						
+					}
+				});
 			}
 		}
 
@@ -113,6 +139,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		this.unbindService(conn);
+		this.unregisterReceiver(receiver);
 		super.onDestroy();
 	}
 
